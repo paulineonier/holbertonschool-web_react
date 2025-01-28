@@ -44,10 +44,20 @@ class Teacher implements TeacherInterface {
 
 // Fonction pour créer un employé en fonction du salaire
 function createEmployee(salary: number | string): Director | Teacher {
-  if (typeof salary === 'number' && salary < 500) {
-    return new Teacher(); // Si le salaire est inférieur à 500, on retourne un Teacher
+  let numericSalary = 0;
+
+  // Vérification si le salaire est une chaîne (ex: "$500"), et extraction de la valeur numérique
+  if (typeof salary === 'string') {
+    numericSalary = parseFloat(salary.replace(/[^\d.-]/g, '')); // On supprime tout sauf les chiffres et le point
+  } else if (typeof salary === 'number') {
+    numericSalary = salary;
+  }
+
+  // Si le salaire est inférieur à 500, on retourne un Teacher, sinon un Director
+  if (numericSalary < 500) {
+    return new Teacher();
   } else {
-    return new Director(); // Sinon, on retourne un Director
+    return new Director();
   }
 }
 
@@ -55,4 +65,6 @@ function createEmployee(salary: number | string): Director | Teacher {
 console.log(createEmployee(200) instanceof Teacher ? 'Teacher' : 'Director');  // Affiche 'Teacher'
 console.log(createEmployee(1000) instanceof Director ? 'Director' : 'Teacher'); // Affiche 'Director'
 console.log(createEmployee('$500') instanceof Director ? 'Director' : 'Teacher'); // Affiche 'Director'
+console.log(createEmployee('400$') instanceof Teacher ? 'Teacher' : 'Director');  // Affiche 'Teacher'
+console.log(createEmployee('250') instanceof Teacher ? 'Teacher' : 'Director');  // Affiche 'Teacher'
 
