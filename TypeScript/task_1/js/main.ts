@@ -45,6 +45,17 @@ const printTeacher: printTeacherFunction = (firstName, lastName) => {
   return `${firstName[0]}. ${lastName}`;
 };
 
-// Exemple d'utilisation de la fonction printTeacher
-console.log(printTeacher("John", "Doe")); // Affiche "J. Doe"
+// Affichage dans le DOM
+const teacherName = printTeacher("John", "Doe");
+const outputDiv = document.createElement('div');
+outputDiv.textContent = teacherName; // Affiche "J. Doe" dans la page
+document.body.appendChild(outputDiv);
 
+// Ajouter les objets teacher3 et director1 dans la page
+const teacherDetails = document.createElement('pre');
+teacherDetails.textContent = JSON.stringify(teacher3, null, 2);
+document.body.appendChild(teacherDetails);
+
+const directorDetails = document.createElement('pre');
+directorDetails.textContent = JSON.stringify(director1, null, 2);
+document.body.appendChild(directorDetails);
