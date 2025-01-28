@@ -7,13 +7,26 @@ interface Teacher {
   [key: string]: any; // Allows adding any extra property dynamically
 }
 
-const teacher3: Teacher = {
+interface Directors extends Teacher {
+  numberOfReports: number; // The number of reports for the Director
+}
+
+const director1: Directors = {
   firstName: 'John',
-  fullTimeEmployee: false,
   lastName: 'Doe',
   location: 'London',
-  contract: false, // Dynamically added property
+  fullTimeEmployee: true,
+  numberOfReports: 17, // Required attribute for Directors
 };
 
-console.log(teacher3);
+console.log(director1);
+
+// should print
+// {
+//   firstName: "John",
+//   fullTimeEmployee: true,
+//   lastName: "Doe",
+//   location: "London",
+//   numberOfReports: 17
+// }
 
