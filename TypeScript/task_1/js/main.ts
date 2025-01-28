@@ -59,3 +59,49 @@ document.body.appendChild(teacherDetails);
 const directorDetails = document.createElement('pre');
 directorDetails.textContent = JSON.stringify(director1, null, 2);
 document.body.appendChild(directorDetails);
+
+// ------------------------------------------------------------------------------
+
+// Interface pour le constructeur de StudentClass
+interface StudentConstructor {
+  new (firstName: string, lastName: string): StudentClass;
+}
+
+// Interface pour la classe StudentClass
+interface StudentClass {
+  firstName: string;
+  lastName: string;
+  workOnHomework(): string;
+  displayName(): string;
+}
+
+// Classe StudentClass qui implémente l'interface
+class Student implements StudentClass {
+  firstName: string;
+  lastName: string;
+
+  constructor(firstName: string, lastName: string) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
+
+  workOnHomework(): string {
+    return 'Currently working';
+  }
+
+  displayName(): string {
+    return this.firstName;
+  }
+}
+
+// Création d'un étudiant et test de la classe
+const student1: StudentClass = new Student("Jane", "Smith");
+
+const studentOutputDiv = document.createElement('div');
+studentOutputDiv.textContent = `${student1.displayName()} is ${student1.workOnHomework()}`;
+document.body.appendChild(studentOutputDiv);
+
+// Affichage de l'objet student1 dans la page
+const studentDetails = document.createElement('pre');
+studentDetails.textContent = JSON.stringify(student1, null, 2);
+document.body.appendChild(studentDetails);
