@@ -61,10 +61,33 @@ function createEmployee(salary: number | string): Director | Teacher {
   }
 }
 
-// Test de la fonction createEmployee
-console.log(createEmployee(200) instanceof Teacher ? 'Teacher' : 'Director');  // Affiche 'Teacher'
-console.log(createEmployee(1000) instanceof Director ? 'Director' : 'Teacher'); // Affiche 'Director'
-console.log(createEmployee('$500') instanceof Director ? 'Director' : 'Teacher'); // Affiche 'Director'
-console.log(createEmployee('400$') instanceof Teacher ? 'Teacher' : 'Director');  // Affiche 'Teacher'
-console.log(createEmployee('250') instanceof Teacher ? 'Teacher' : 'Director');  // Affiche 'Teacher'
+// Type prédicat pour vérifier si l'employé est un Director
+function isDirector(employee: Director | Teacher): employee is Director {
+  return (employee as Director).workDirectorTasks !== undefined;
+}
+
+// Fonction pour exécuter le travail en fonction de l'employé
+function executeWork(employee: Director | Teacher): void {
+  if (isDirector(employee)) {
+    console.log(employee.workDirectorTasks());  // Si Director, on appelle workDirectorTasks
+  } else {
+    console.log(employee.workTeacherTasks());   // Si Teacher, on appelle workTeacherTasks
+  }
+}
+
+// Test de la fonction createEmployee et executeWork
+const employee1 = createEmployee(200);
+executeWork(employee1);  // Affiche 'Getting to work' pour Teacher
+
+const employee2 = createEmployee(1000);
+executeWork(employee2);  // Affiche 'Getting to director tasks' pour Director
+
+const employee3 = createEmployee('$500');
+executeWork(employee3);  // Affiche 'Getting to director tasks' pour Director
+
+const employee4 = createEmployee('400$');
+executeWork(employee4);  // Affiche 'Getting to work' pour Teacher
+
+const employee5 = createEmployee('250');
+executeWork(employee5);  // Affiche 'Getting to work' pour Teacher
 
